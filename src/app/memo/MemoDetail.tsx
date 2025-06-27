@@ -1,6 +1,6 @@
 import { StyleSheet, ScrollView, Text, View } from "react-native";
-import Header from "../../components/Header";
-import EditCircleButton from "../../components/EditCircleButton";
+import Header from "../../../components/Header";
+import EditCircleButton from "../../../components/EditCircleButton";
 
 export default function MemoDetail() {
   return (

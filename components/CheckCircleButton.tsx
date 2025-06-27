@@ -1,10 +1,10 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 
-export default function EditCircleButton() {
+export default function CheckCircleButton() {
   return (
     <View style={styles.Container}>
-      <Feather name="edit" size={40} color="#ffffff" />
+      <Feather name="check" size={40} color="#ffffff" />
     </View>
   );
 }
@@ -12,7 +12,7 @@ export default function EditCircleButton() {
 const styles = StyleSheet.create({
   Container: {
     position: "absolute",
-    top: 160,
+    bottom: 40,
     right: 40,
     width: 56,
     height: 56,

@@ -1,20 +1,16 @@
 import { StyleSheet, Text, View } from "react-native";
+import { Feather } from "@expo/vector-icons";
 
 export default function CreateCircleButton() {
   return (
-    <View style={styles.createMemoButtonContainer}>
-      <Text style={styles.createMemoButton}>+</Text>
+    <View style={styles.Container}>
+      <Feather name="plus" size={40} color="#ffffff" />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  createMemoButton: {
-    flex: 1,
-    fontSize: 36,
-    color: "#ffffff",
-  },
-  createMemoButtonContainer: {
+  Container: {
     position: "absolute",
     bottom: 40,
     right: 40,

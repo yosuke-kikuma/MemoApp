@@ -1,22 +1,5 @@
-import { StyleSheet, View } from "react-native";
-import Header from "../../components/Header";
-import MemoList from "../../components/MemoList";
-import CreateCircleButton from "../../components/CreateCircleButton";
-export default function index() {
-  return (
-    <View style={styles.container}>
-      <Header />
-      <MemoList />
-      <MemoList />
-      <MemoList />
-      <CreateCircleButton />
-    </View>
-  );
-}
+import { Redirect } from "expo-router";
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-});
+export default function Index() {
+  return <Redirect href="./auth/Login" />;
+}
