@@ -1,15 +1,24 @@
-import { StyleSheet, View, KeyboardAvoidingView, TextInput } from "react-native";
-import Header from "../../../components/Header";
+import {
+  StyleSheet,
+  View,
+  KeyboardAvoidingView,
+  TextInput,
+} from "react-native";
+import { useRouter } from "expo-router";
 import CheckCircleButton from "../../../components/CheckCircleButton";
 
 export default function MemoEdit() {
+  const router = useRouter();
+
+  const handlePress = () => {
+    router.push("./Home");
+  };
   return (
     <KeyboardAvoidingView behavior="height" style={styles.container}>
-      <Header />
       <View style={styles.inputContainer}>
         <TextInput style={styles.inputText} value="買い物リスト" multiline />
       </View>
-      <CheckCircleButton />
+      <CheckCircleButton onPress={handlePress} />
     </KeyboardAvoidingView>
   );
 }

@@ -1,18 +1,21 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { Feather } from "@expo/vector-icons";
 
-export default function EditCircleButton() {
+type Props = {
+  onPress?: () => void;
+};
+export default function EditCircleButton({ onPress }: Props) {
   return (
-    <View style={styles.Container}>
+    <TouchableOpacity onPress={onPress} style={styles.Container}>
       <Feather name="edit" size={40} color="#ffffff" />
-    </View>
+    </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   Container: {
     position: "absolute",
-    top: 160,
+    top: 60,
     right: 40,
     width: 56,
     height: 56,

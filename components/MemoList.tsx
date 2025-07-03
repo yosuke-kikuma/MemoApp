@@ -1,18 +1,25 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { Link } from "expo-router";
+import { Feather } from "@expo/vector-icons";
 
 export default function MemoList() {
   return (
-    <View>
-      <View style={styles.listContainer}>
+    <Link href="./MemoDetail" asChild>
+      <TouchableOpacity style={styles.listContainer}>
         <View>
           <Text style={styles.listItemTitle}>買い物リスト</Text>
           <Text style={styles.listItemDate}>2022年6月7日 11:00</Text>
         </View>
-        <View>
-          <Text style={styles.listDeleteButton}>x</Text>
-        </View>
-      </View>
-    </View>
+        <TouchableOpacity>
+          <Feather
+            style={styles.listDeleteButton}
+            name="delete"
+            size={32}
+            color="#B0B0B0"
+          />
+        </TouchableOpacity>
+      </TouchableOpacity>
+    </Link>
   );
 }
 
@@ -38,7 +45,5 @@ const styles = StyleSheet.create({
   },
   listDeleteButton: {
     marginRight: 16,
-    fontSize: 30,
-    color: "#ff0000",
   },
 });

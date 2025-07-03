@@ -1,11 +1,24 @@
-import { StyleSheet, Text, TextInput, View } from "react-native";
-import Header from "../../../components/Header";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  TouchableOpacity,
+} from "react-native";
+import { useState } from "react";
+import { Link, useRouter } from "expo-router";
 import Button from "../../../components/Button";
 
 export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const router = useRouter();
+
+  const handleSubmit = () => {
+    router.replace("../memo/Home");
+  };
   return (
     <View style={styles.container}>
-      <Header />
       <View style={styles.mainContainer}>
         <Text style={styles.title}>Log in</Text>
         <TextInput
@@ -18,7 +31,8 @@ export default function Login() {
             fontSize: 16,
           }}
           placeholder="Email"
-          value="Email Address"
+          onChangeText={(e) => setEmail(e)}
+          value={email}
           keyboardType="email-address"
         />
         <TextInput
@@ -31,13 +45,18 @@ export default function Login() {
             fontSize: 16,
           }}
           placeholder="Password"
-          value="Password"
+          onChangeText={(e) => setPassword(e)}
+          value={password}
           secureTextEntry
         />
-        <Button />
+        <Button onPress={handleSubmit} />
         <View style={styles.description}>
           <Text style={styles.descriptionText}>Not Registered?</Text>
-          <Text style={styles.descriptionLink}>Sign up here</Text>
+          <Link href="./SignUp" asChild>
+            <TouchableOpacity>
+              <Text style={styles.descriptionLink}>Sign up here</Text>
+            </TouchableOpacity>
+          </Link>
         </View>
       </View>
     </View>

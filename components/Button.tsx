@@ -1,11 +1,11 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import React from "react";
 
-export default function Button() {
+export default function Button({ onPress }: { onPress: () => void }) {
   return (
-    <View style={styles.submit}>
+    <TouchableOpacity onPress={onPress} style={styles.submit}>
       <Text style={styles.submitText}>submit</Text>
-    </View>
+    </TouchableOpacity>
   );
 }
 

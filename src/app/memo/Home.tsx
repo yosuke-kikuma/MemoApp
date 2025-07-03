@@ -1,15 +1,29 @@
 import { StyleSheet, View } from "react-native";
-import Header from "../../../components/Header";
+import { useEffect } from "react";
+import { useRouter, useNavigation } from "expo-router";
+import LogOutButton from "../../../components/LogOutButton";
 import MemoList from "../../../components/MemoList";
 import CreateCircleButton from "../../../components/CreateCircleButton";
 export default function Home() {
+  const router = useRouter();
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => <LogOutButton />,
+    });
+  }, []);
+
+  const handlePress = () => {
+    router.push("./MemoCreate");
+  };
+
   return (
     <View style={styles.container}>
-      <Header />
       <MemoList />
       <MemoList />
       <MemoList />
-      <CreateCircleButton />
+      <CreateCircleButton onPress={handlePress} />
     </View>
   );
 }
