@@ -15,12 +15,6 @@ export default function Layout() {
           fontWeight: "bold",
         },
       }}
-    >
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      <Stack.Screen name="memo/MemoCreate" />
-      <Stack.Screen name="memo/MemoDetail" />
-      <Stack.Screen name="memo/MemoEdit" />
-      <Stack.Screen name="memo/Home" />
-    </Stack>
+    />
   );
 }

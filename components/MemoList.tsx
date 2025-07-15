@@ -1,16 +1,55 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
 import { Link } from "expo-router";
 import { Feather } from "@expo/vector-icons";
+import { auth, db } from "../src/firebaseConfig";
+import { deleteDoc, doc } from "firebase/firestore";
+import { Memo } from "../types/memo"; // Assuming you have a Memo type defined
 
-export default function MemoList() {
+export default function MemoList({ memo }: { memo: Memo }) {
+  const dateString = memo.createdAt
+    ? memo.createdAt.toDate().toLocaleDateString("ja-JP")
+    : "日付不明";
+
+  const handlePress = () => {
+    if (!auth.currentUser) {
+      console.error("ユーザーが認証されていません。");
+      return;
+    }
+    try {
+      const ref = doc(db, `users/${auth.currentUser.uid}/memos`, memo.id);
+      Alert.alert("メモの削除", "このメモを削除しますか？", [
+        {
+          text: "キャンセル",
+          style: "cancel",
+        },
+        {
+          text: "削除",
+          style: "destructive",
+          onPress: () => deleteDoc(ref),
+        },
+      ]);
+    } catch (error) {
+      console.error("メモの削除中に予期しないエラーが発生しました:", error);
+    }
+  };
+
   return (
-    <Link href="./MemoDetail" asChild>
+    <Link
+      href={{
+        pathname: "./MemoDetail",
+        params: { id: memo.id }, // ✅ 正しい：IDを渡している
+      }}
+      asChild
+    >
+      {/* タッチ可能なコンテナ */}
       <TouchableOpacity style={styles.listContainer}>
-        <View>
-          <Text style={styles.listItemTitle}>買い物リスト</Text>
-          <Text style={styles.listItemDate}>2022年6月7日 11:00</Text>
+        <View style={{ flex: 1 }}>
+          <Text numberOfLines={1} style={styles.listItemTitle}>
+            {memo.content}
+          </Text>
+          <Text style={styles.listItemDate}>{dateString}</Text>
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handlePress}>
           <Feather
             style={styles.listDeleteButton}
             name="delete"

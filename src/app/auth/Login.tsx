@@ -8,15 +8,31 @@ import {
 import { useState } from "react";
 import { Link, useRouter } from "expo-router";
 import Button from "../../../components/Button";
+import { auth } from "../../firebaseConfig";
+import { signInWithEmailAndPassword } from "firebase/auth"; // Import the auth instance
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
 
-  const handleSubmit = () => {
-    router.replace("../memo/Home");
+  const handleSubmit = async () => {
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+      console.log("User signed in:", user);
+      router.replace("../memo/Home");
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.error("Error signing in:", errorCode, errorMessage);
+    }
   };
+
   return (
     <View style={styles.container}>
       <View style={styles.mainContainer}>
@@ -52,7 +68,7 @@ export default function Login() {
         <Button onPress={handleSubmit} />
         <View style={styles.description}>
           <Text style={styles.descriptionText}>Not Registered?</Text>
-          <Link href="./SignUp" asChild>
+          <Link href="./SignUp" asChild replace>
             <TouchableOpacity>
               <Text style={styles.descriptionLink}>Sign up here</Text>
             </TouchableOpacity>
