@@ -13,24 +13,34 @@ export default function MemoList({ memo }: { memo: Memo }) {
   const handlePress = () => {
     if (!auth.currentUser) {
       console.error("ユーザーが認証されていません。");
+      Alert.alert("エラー", "ユーザーが認証されていません。");
       return;
     }
-    try {
-      const ref = doc(db, `users/${auth.currentUser.uid}/memos`, memo.id);
-      Alert.alert("メモの削除", "このメモを削除しますか？", [
-        {
-          text: "キャンセル",
-          style: "cancel",
+
+    const ref = doc(db, `users/${auth.currentUser.uid}/memos`, memo.id);
+
+    Alert.alert("メモの削除", "このメモを削除しますか？", [
+      {
+        text: "キャンセル",
+        style: "cancel",
+      },
+      {
+        text: "削除",
+        style: "destructive",
+        onPress: async () => {
+          try {
+            await deleteDoc(ref);
+            console.log("メモが正常に削除されました");
+          } catch (error) {
+            console.error("メモの削除中にエラーが発生しました:", error);
+            Alert.alert(
+              "エラー",
+              "メモの削除に失敗しました。もう一度お試しください。"
+            );
+          }
         },
-        {
-          text: "削除",
-          style: "destructive",
-          onPress: () => deleteDoc(ref),
-        },
-      ]);
-    } catch (error) {
-      console.error("メモの削除中に予期しないエラーが発生しました:", error);
-    }
+      },
+    ]);
   };
 
   return (

@@ -19,19 +19,21 @@ export default function MemoEdit() {
 
   useEffect(() => {
     const fetchMemo = async () => {
+      if (!auth.currentUser || !id) {
+        console.error("ユーザーが認証されていません。");
+        return;
+      }
       try {
-        if (auth.currentUser && id) {
-          const ref = doc(
-            db,
-            `users/${auth.currentUser.uid}/memos`,
-            id as string
-          );
-          const docSnap = await getDoc(ref);
-          if (docSnap.exists()) {
-            setMemo(docSnap.data().content);
-          } else {
-            console.error("No such document!");
-          }
+        const ref = doc(
+          db,
+          `users/${auth.currentUser.uid}/memos`,
+          id as string
+        );
+        const docSnap = await getDoc(ref);
+        if (docSnap.exists()) {
+          setMemo(docSnap.data().content);
+        } else {
+          console.error("No such document!");
         }
       } catch (error) {
         console.error("Error fetching memo:", error);
